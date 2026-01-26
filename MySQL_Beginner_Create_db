@@ -1,0 +1,50 @@
+--Select statement cases 
+
+SELECT *
+FROM Parks_and_Recreation..employee_demographics 
+
+SELECT first_name
+FROM Parks_and_Recreation..employee_demographics 
+
+SELECT first_name, last_name, birth_date
+FROM Parks_and_Recreation..employee_demographics 
+
+--select statement and calculations 
+
+SELECT first_name, 
+last_name, 
+birth_date,
+age,
+age + 10 as agerecalculate
+FROM Parks_and_Recreation..employee_demographics 
+
+--PEMDAS (parenthesis, exponent, multiplication, division, addition and subtraction)
+
+SELECT first_name, 
+last_name, 
+birth_date,
+age,
+age + 10 as agerecalculate,
+(age + 10) * 10 + 10 as newmath
+FROM Parks_and_Recreation..employee_demographics 
+
+-- Select distinct, not apply for unique values
+
+SELECT gender
+FROM Parks_and_Recreation..employee_demographics 
+
+SELECT DISTINCT gender
+FROM Parks_and_Recreation..employee_demographics 
+
+SELECT DISTINCT first_name, gender
+FROM Parks_and_Recreation..employee_demographics 
+
+--select statement with aggregate functions
+
+SELECT COUNT(first_name)
+FROM Parks_and_Recreation..employee_demographics 
+
+SELECT MAX(age)as older, MIN(age) as younger
+FROM Parks_and_Recreation..employee_demographics 
+
+
