@@ -1,0 +1,71 @@
+--Group by (COUNT(), MAX(), MIN(), SUM(), AVG()) + Order by 
+
+SELECT *
+FROM employee_demographics
+
+SELECT gender
+FROM employee_demographics
+GROUP BY gender 
+
+SELECT gender, AVG(age) as avg
+FROM employee_demographics
+GROUP BY gender 
+
+SELECT occupation, salary
+FROM employee_salary
+GROUP BY occupation, salary
+
+SELECT gender, AVG(age) as avg, MAX(age) as max, MIN(age) as min, COUNT(age) as count
+FROM employee_demographics
+GROUP BY gender 
+
+--ORDER BY
+
+SELECT *
+FROM employee_demographics
+ORDER BY first_name
+
+SELECT *
+FROM employee_demographics
+ORDER BY first_name DESC
+
+SELECT *
+FROM employee_demographics
+ORDER BY gender, age
+
+--order by age as a first column won't have the same result (unique values)
+
+SELECT *
+FROM employee_demographics
+ORDER BY age, gender 
+
+--order by column positions
+
+SELECT *
+FROM employee_demographics
+ORDER BY 5, 4 DESC
+
+
+-- no one has the same gender or age 
+
+SELECT gender, age, COUNT(gender)
+FROM employee_demographics
+GROUP BY gender, age 
+
+--group by and where
+
+SELECT gender, COUNT(gender) as countgender
+FROM employee_demographics
+GROUP BY gender
+
+
+SELECT gender, COUNT(gender) as countgender
+FROM employee_demographics
+WHERE age > 35
+GROUP BY gender
+
+SELECT gender, COUNT(gender) as countgender
+FROM employee_demographics
+WHERE age > 35
+GROUP BY gender
+ORDER BY 2 DESC
