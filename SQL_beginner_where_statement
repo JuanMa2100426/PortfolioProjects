@@ -1,0 +1,86 @@
+--Where clause (=, <>, <, >,!=, AND, OR, LIKE, Null, Not Null, In, *%)
+
+--Where with integers and characters or strings 
+
+Select *
+from Parks_and_Recreation..employee_salary
+WHERE first_name = 'leslie'
+
+Select *
+from Parks_and_Recreation..employee_salary
+WHERE salary > 50000
+
+Select *
+from Parks_and_Recreation..employee_salary
+WHERE salary >= 50000
+
+Select *
+from Parks_and_Recreation..employee_salary
+WHERE salary < 50000
+
+Select *
+from Parks_and_Recreation..employee_salary
+WHERE salary <= 50000
+
+Select *
+from Parks_and_Recreation..employee_demographics
+WHERE gender = 'female'
+
+Select *
+from Parks_and_Recreation..employee_demographics
+WHERE gender != 'female'
+
+--where with date columns 
+
+Select *
+from Parks_and_Recreation..employee_demographics
+WHERE birth_date > '1985-01-01'
+
+--Logical operators in where clause (AND or NOT)
+
+Select *
+from Parks_and_Recreation..employee_demographics
+WHERE birth_date > '1985-01-01' AND gender = 'male'
+
+Select *
+from Parks_and_Recreation..employee_demographics
+WHERE birth_date > '1985-01-01' OR gender = 'male'
+
+Select *
+from Parks_and_Recreation..employee_demographics
+WHERE birth_date > '1985-01-01' OR NOT gender = 'male'
+
+
+Select *
+from Parks_and_Recreation..employee_demographics
+WHERE (first_name = 'Leslie' AND age = 44) OR age > 55
+
+--LIKE statement (% _)
+
+Select *
+from Parks_and_Recreation..employee_demographics
+WHERE first_name LIKE 'Jer%'
+
+Select *
+from Parks_and_Recreation..employee_demographics
+WHERE first_name LIKE 'a%'
+
+Select *
+from Parks_and_Recreation..employee_demographics
+WHERE first_name LIKE 'a__'
+
+Select *
+from Parks_and_Recreation..employee_demographics
+WHERE first_name LIKE 'a___'
+
+Select *
+from Parks_and_Recreation..employee_demographics
+WHERE first_name LIKE 'a___%'
+
+Select *
+from Parks_and_Recreation..employee_demographics
+WHERE birth_date LIKE '1989%'
+
+Select*
+from Parks_and_Recreation..employee_demographics
+WHERE first_name IN ('andy','ann')
