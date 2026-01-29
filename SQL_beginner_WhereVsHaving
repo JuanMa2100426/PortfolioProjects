@@ -1,0 +1,44 @@
+--HAVING VS WHERE
+
+SELECT gender, AVG(CAST([age] as DECIMAL(9,2))) 
+FROM employee_demographics
+GROUP BY gender 
+
+SELECT gender, AVG(age) 
+FROM employee_demographics
+GROUP BY gender
+
+--is not gonna work because the aggregate function will occurs only after the group by actually groups 
+
+SELECT gender, AVG(age) 
+FROM employee_demographics
+WHERE AVG(age) > 40
+GROUP BY gender
+
+-- Right way using having clause, always after group by and you can use it with aggregate functions 
+
+SELECT gender, AVG(age) 
+FROM employee_demographics
+GROUP BY gender
+HAVING AVG(age) > 40
+
+--Example using both
+
+SELECT *
+FROM employee_salary
+
+SELECT occupation, AVG(salary)
+FROM employee_salary
+group by occupation
+
+SELECT occupation, AVG(salary)
+FROM employee_salary
+where occupation like '%manager%'
+group by occupation
+
+SELECT occupation, AVG(salary)
+FROM employee_salary
+where occupation like '%manager%'
+group by occupation
+HAVING AVG(salary) > 75000
+
