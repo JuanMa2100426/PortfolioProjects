@@ -1,0 +1,31 @@
+--Limit and Aliasing (LIMIT IS NOT SUPPORTED BY SQL)
+
+SELECT *
+FROM employee_demographics
+
+SELECT TOP 3 *
+FROM employee_demographics
+
+SELECT TOP 3 *
+FROM employee_demographics
+ORDER BY AGE DESC
+
+--ALIASING 
+
+SELECT gender, AVG(age)
+FROM employee_demographics
+group by gender 
+
+SELECT gender, AVG(age)
+FROM employee_demographics
+group by gender 
+having AVG(age) > 40
+
+SELECT gender, AVG(age) as Avg
+FROM employee_demographics
+group by gender 
+having AVG(age) > 40
+
+
+
+
