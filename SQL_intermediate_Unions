@@ -1,0 +1,63 @@
+--Unions 
+--for us the first example didn't work cause age is a int AND the columns must have similar data types
+
+SELECT age, gender
+FROM employee_demographics
+UNION 
+SELECT first_name, last_name
+FROM employee_salary
+
+SELECT CAST(age as varchar(50)) as age, gender
+FROM employee_demographics
+UNION 
+SELECT first_name, last_name
+FROM employee_salary
+
+--you can't combine random data together, you need to keep the data the same 
+
+SELECT first_name, last_name
+FROM employee_demographics
+UNION 
+SELECT first_name, last_name
+FROM employee_salary
+
+--if we wanna see all the data use UNION ALL
+
+SELECT first_name, last_name
+FROM employee_demographics
+UNION ALL
+SELECT first_name, last_name
+FROM employee_salary
+
+--use case: parkdepartment trying to identify the older and highest pay employee to push it out or reduce the paycheck
+
+SELECT first_name, last_name
+FROM employee_demographics
+WHERE AGE > 50
+
+SELECT first_name, last_name, 'OLD' AS LABEL
+FROM employee_demographics
+WHERE AGE > 50
+
+SELECT first_name, last_name, 'OLD' AS LABEL
+FROM employee_demographics
+WHERE AGE > 50
+UNION
+SELECT first_name, last_name, 'highly pay employee' as LABEL
+FROM employee_salary
+WHERE salary > 70000
+
+--company said 50 is a little too low, they change to 40 and add two different gender
+
+SELECT first_name, last_name, 'OLD MAN' AS LABEL
+FROM employee_demographics
+WHERE AGE > 40 AND gender = 'male'
+UNION
+SELECT first_name, last_name, 'OLD LADY' AS LABEL
+FROM employee_demographics
+WHERE AGE > 40 AND gender = 'female'
+UNION
+SELECT first_name, last_name, 'highly pay employee' as LABEL
+FROM employee_salary
+WHERE salary > 70000
+ORDER BY first_name, last_name
