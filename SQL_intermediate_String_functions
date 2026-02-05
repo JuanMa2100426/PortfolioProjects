@@ -1,0 +1,79 @@
+--String functions 
+
+--Length for us LEN
+
+SELECT LEN('SKYFALL')
+
+SELECT *
+FROM employee_demographics
+
+SELECT first_name, LEN(first_name)
+FROM employee_demographics
+
+SELECT first_name, LEN(first_name)
+FROM employee_demographics
+ORDER BY 2
+
+--UPPER-LOWER
+
+SELECT UPPER('sky')
+SELECT LOWER('SKY')
+
+SELECT first_name, UPPER(first_name)
+FROM employee_demographics
+
+--TRIM (LTRIM - RTRIM)
+
+SELECT TRIM(        'sky'     )
+SELECT LTRIM(        'sky'     )
+SELECT RTRIM(        'sky'     )
+
+--substring --- Left and Right
+
+SELECT *
+FROM employee_demographics
+
+SELECT first_name, LEFT(first_name, 4)
+FROM employee_demographics
+
+SELECT first_name, 
+LEFT(first_name, 4),
+RIGHT(first_name, 4)
+FROM employee_demographics
+
+SELECT first_name, 
+LEFT(first_name, 4),
+RIGHT(first_name, 4),
+SUBSTRING(first_name,3,2),
+birth_date
+FROM employee_demographics
+
+--next example we are trying to substring the month in the birth_date
+--but SUBSTRING function accepts character data types like char, varchar, nchar, nvarchar, text etc
+--we will have to CAST in order to get the result 
+
+SELECT first_name, 
+LEFT(first_name, 4),
+RIGHT(first_name, 4),
+SUBSTRING(first_name,3,2),
+birth_date,
+SUBSTRING(CAST(birth_date as varchar(10)),6,2) AS birth_month
+FROM employee_demographics
+
+--replace
+
+SELECT first_name, REPLACE (first_name, 'a','z')
+FROM employee_demographics
+
+--locate in mysql but for us sql is going to be charindex 
+
+SELECT CHARINDEX('X', 'ALEXANDER')
+
+SELECT first_name, CHARINDEX('An', first_name)
+FROM employee_demographics
+
+--concatenation
+
+SELECT first_name, last_name,
+CONCAT(first_name,' ',last_name) as fullname
+FROM employee_demographics
