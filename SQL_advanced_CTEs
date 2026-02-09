@@ -1,0 +1,75 @@
+--CTEs
+
+WITH CTE_Example AS
+(
+   SELECT gender, AVG(salary), MAX(salary), MIN(salary), COUNT(salary)
+FROM employee_demographics as dem
+JOIN employee_salary as sal 
+    on dem.employee_id = sal.employee_id
+GROUP BY gender 
+)
+SELECT *
+FROM CTE_Example
+
+--with cte you need to define a name to every column
+--You need to give a alias name to each column
+
+WITH CTE_Example AS
+(
+   SELECT gender, AVG(salary) AS avg_salary, MAX(salary) as max_salary, 
+   MIN(salary) as min_salary, COUNT(salary) as count_salary
+FROM employee_demographics as dem
+JOIN employee_salary as sal 
+    on dem.employee_id = sal.employee_id
+GROUP BY gender 
+)
+SELECT *
+FROM CTE_Example
+
+--you can do the same with  a subquery 
+--CTEs are better for readabily and calculations 
+
+SELECT AVG(avg_salary)
+FROM 
+(
+   SELECT gender, AVG(salary) AS avg_salary, MAX(salary) as max_salary, 
+   MIN(salary) as min_salary, COUNT(salary) as count_salary
+FROM employee_demographics as dem
+JOIN employee_salary as sal 
+    on dem.employee_id = sal.employee_id
+GROUP BY gender 
+) AS EXAMPE_SUBQUERY 
+
+--with CTEs you can use it just immediately after
+--You can create multiples CTEs within just one 
+
+WITH CTE_Example AS
+(
+SELECT employee_id, gender, birth_date
+FROM employee_demographics 
+WHERE birth_date > '1985-01-01'
+),
+CTE_example2 as 
+(
+SELECT employee_id, salary
+FROM employee_salary
+WHERE salary > 50000
+)
+SELECT *
+FROM CTE_Example
+JOIN CTE_example2
+    on CTE_Example.employee_id = CTE_example2.employee_id
+
+--there is other way to give a alias without type as to each column, faster and easier 
+
+WITH CTE_Example (Gender, avg_salary, max_salary, min_salary, count_salary) AS
+(
+   SELECT gender, AVG(salary), MAX(salary), 
+   MIN(salary), COUNT(salary)
+FROM employee_demographics as dem
+JOIN employee_salary as sal 
+    on dem.employee_id = sal.employee_id
+GROUP BY gender 
+)
+SELECT *
+FROM CTE_Example
