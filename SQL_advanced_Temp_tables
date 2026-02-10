@@ -1,0 +1,61 @@
+--Temporary table 
+--there is other way 'CREATE TEMPORARY TABLE temp_table' didn't work for us 
+
+CREATE TABLE #temp_table
+(
+first_name varchar(50),
+last_name varchar(50),
+favorite_movie varchar(100)
+)
+
+SELECT *
+FROM #temp_table
+
+INSERT INTO #temp_table
+VALUES ('Alex','Freberg','Lord of the Rings: The Two Towers')
+
+SELECT *
+FROM #temp_table
+
+--other way to create temporary tables
+--we want a subsection of employee_salary, where the salary > 50000
+--this second method doesn't work for SQL but work for MySQL with select *
+
+
+SELECT *
+FROM employee_salary
+
+CREATE TABLE #Salary_Over_50K 
+SELECT *
+FROM employee_salary
+WHERE salary >= 50000
+
+-- what work for us is SELECT {column list} INTO #temp_table_name FROM {Table(s)}
+
+SELECT employee_id, first_name, last_name, occupation, salary, dept_id
+INTO #Salary_Over_50K
+FROM employee_salary
+WHERE salary > 50000
+
+drop table if EXISTS #Salary_Over_50K
+
+select*
+FROM #Salary_Over_50K
+
+--join temp table
+
+CREATE TABLE #Temp_Join_table (
+JobOccupation varchar (50),
+EmployeesPerJob int,
+AvgAge int,
+AvgSalary int)
+
+INSERT INTO #Temp_Join_table
+SELECT occupation, count (occupation), AVG(Age), AVG(Salary)
+FROM employee_demographics AS dem
+JOIN employee_salary as Sal 
+ON dem.employee_id = Sal.employee_id
+GROUP BY occupation
+
+SELECT *
+from #Temp_Join_table
