@@ -1,0 +1,77 @@
+--Triggers and events
+
+SELECT *
+FROM employee_demographics
+
+SELECT *
+FROM employee_salary
+
+--creating trigger in mySQL
+--this is the way to create a triger for insert in my sql
+--for each row and new. secure you to add one row in each table 
+
+DELIMITER $$
+--CREATE TRIGGER employee_insert 
+    AFTER INSERT ON employee_salary
+    FOR EACH ROW
+BEGIN 
+    INSERT INTO employee_demographics (employee_id, first_name, last_name)
+    VALUES (NEW.employee_id, NEW.first_name, NEW.last_name) ;
+END $$
+DELIMITER ;
+
+--create a trigger so when the data is update into the salary is also update in the demographic in SQL
+-- this is one of the way to create trigger. It work but then you get duplicated in one of the table
+
+--CREATE TRIGGER employee_insert 
+ON employee_salary
+FOR INSERT
+AS
+BEGIN
+SET NOCOUNT ON
+    DECLARE @employee_id int 
+    DECLARE @first_name VARCHAR(50)
+    DECLARE @last_name VARCHAR(50)
+    SELECT @employee_id = @employee_id from inserted
+    INSERT INTO employee_demographics (employee_id, first_name, last_name)
+    VALUES (@employee_id, @first_name, @last_name)
+    PRINT 'INSERT TRIGER EXECUTED'
+END
+
+-- creating trigger to everytime you insert into one table, automatically insert in the other one
+--inserted is a temporaty table that make reference to a table you are creating on 
+--With this way yo don't get any erro for the primary key at the moment of insert into one of the tables 
+
+
+--CREATE TRIGGER employee_insert 
+ON employee_salary
+FOR INSERT
+AS
+BEGIN
+SET NOCOUNT ON
+    INSERT INTO employee_demographics (employee_id, first_name, last_name)
+    SELECT employee_id, first_name, last_name
+    FROM inserted
+    PRINT 'INSERT TRIGER EXECUTED'
+END
+
+--After create a triger, you just insert into salary and is going to automatically insert into demographic
+--It was giving a erro cause a duplicate about primary key
+
+ALTER TABLE employee_salary
+   ADD CONSTRAINT employee_id  PRIMARY KEY CLUSTERED (employee_id)
+
+--THE ONLY WAY TO INSERT INTO WAS DELETING PRIMARY KEY 
+--GO TO KEYS, DROP PK (PRIMARY KEY) THEN RUN 
+
+INSERT INTO employee_salary (employee_id, first_name, last_name, occupation, salary, dept_id) 
+VALUES (13, 'Jean-Ralphio', 'Saperstein', 'Entertainment 720 CEO', 1000000, NULL)
+
+--EVENTS
+--Similar to triggers, a trigger happens when an event takes place
+--Event take place when is scheduled
+
+SELECT *
+FROM employee_demographics
+
+
