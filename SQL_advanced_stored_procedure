@@ -1,0 +1,97 @@
+--Stored procedures
+
+SELECT *
+FROM employee_salary
+WHERE salary >= 50000
+
+--there is a way to create this procedure in mySql 
+CREATE PROCEDURE large_salaries ()
+SELECT *
+FROM employee_salary
+WHERE salary >= 50000
+
+--but for SQL we use after name the procedure the AS
+--You can find it under programmability 
+
+CREATE PROCEDURE large_salaries 
+AS
+SELECT *
+FROM employee_salary
+WHERE salary >= 50000
+
+--the way to call this stored procedure for mySQL
+
+CALL large_salaries ()
+
+--The way for SQL
+
+EXEC large_salaries
+
+-- Creating 2 stored procedures in one, for us will create just adding one after other
+
+CREATE PROCEDURE large_salaries3 AS
+SELECT *
+FROM employee_salary
+WHERE salary >= 50000
+SELECT *
+FROM employee_salary
+WHERE salary >= 10000
+
+EXEC large_salaries2
+
+--In SQL the 2 store procedure can be create wihtou a delimiter but here how do it in MySQL
+--This doesn't apply in SQL 
+
+DELIMITER $$
+BEGIN
+    CREATE PROCEDURE large_salaries3 AS
+    SELECT *
+    FROM employee_salary
+    WHERE salary >= 50000;
+    SELECT *
+    FROM employee_salary
+    WHERE salary >= 10000;
+END $$
+DELIMITER ;
+
+-- Paramater = variable that are passed as an input into a store procedure
+-- doesn't apply to SQL in the same way
+
+EXEC large_salaries @occupation 'Nurse'
+
+-- advance store procedures 
+
+
+CREATE PROCEDURE Temp_Employee
+AS
+DROP TABLE IF EXISTS #temp_employee
+Create table #temp_employee (
+Occupation varchar(100),
+EmployeesPerJob int ,
+AvgAge int,
+AvgSalary int
+)
+
+Insert into #temp_employee
+SELECT occupation, Count(occupation), Avg(Age), AVG(salary)
+FROM employee_demographics as emp
+JOIN employee_salary AS sal
+   ON emp.employee_id = sal.employee_id
+group by occupation
+
+Select *
+From #temp_employee
+
+
+EXEC Temp_Employee
+
+--once we have this store procedure we hit script as alter to add a parameter 
+--Below alter procedure you add a @ and type the parameter with the data type @occupation varchar (100)
+--in the part where you insert data, add where ocuppation = @occupation 
+--then run 
+
+EXEC Temp_Employee
+
+--When you run exc temp table is going to give a error cause now you have to add the parameter that you just modify 
+
+EXEC Temp_Employee @occupation = 'nurse'
